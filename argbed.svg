@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="t">
+  <title id="t">Argbed</title>
+  <style>path{fill:#1f1f1f}@media (prefers-color-scheme:dark){path{fill:#e8e8e8}}</style>
+  <path fill-rule="evenodd" d="M4 58V34h8v6h4V22h6v6h4V6h4v6h4V6h4v22h4v-6h6v18h4v-6h8v24ZM28 58v-8a4 4 0 0 1 8 0v8Z"/>
+</svg>

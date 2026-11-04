@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Argbed is a hardened, private, minimal, modular kickstart for Fedora: encrypted root, signed UKI boot, default-drop firewall, confined users, no @core.">
+<meta property="og:title" content="Argbed: a hardened, private, minimal, modular kickstart for Fedora">
+<meta property="og:description" content="Encrypted root, signed UKI boot, default-drop firewall, confined users, no @core. One script assembles the modules into one kickstart file for Fedora's network installer.">
+<title>Argbed: a hardened, private, minimal, modular kickstart for Fedora</title>
+<link rel="canonical" href="https://argbed.com/">
+<link rel="icon" href="argbed.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<header>
+<img src="argbed.svg" alt="" width="80" height="80">
+<div>
+<h1>Argbed</h1>
+<p class="say">A hardened, private, minimal, modular kickstart for Fedora</p>
+</div>
+</header>
+<p class="lead">One script assembles the modules into one kickstart file for Fedora's network installer.</p>
+
+<h2>What the installed system is</h2>
+<ul>
+<li>LUKS2-encrypted root filesystem.</li>
+<li>Signed unified kernel images boot through shim under a key generated at install time; with Secure Boot on, nothing unsigned boots. GRUB has no boot entry and no configuration.</li>
+<li>Default-drop nftables for inbound and outbound traffic, loaded before the network comes up on every boot.</li>
+<li>SELinux enforcing, with confined users and a locked root account.</li>
+<li>systemd-networkd and iwd instead of NetworkManager, with randomized MAC addresses and anonymized DHCP.</li>
+<li>Microphones and cameras disabled: no capture node in the audio server, and their device nodes closed to every unprivileged process.</li>
+<li>Updates installed at boot, before login, never during a session.</li>
+<li>A sway Wayland desktop.</li>
+<li>No <code>@core</code>: every package is named in a module, a hard dependency of one, or one of the installer's own additions.</li>
+</ul>
+
+<h2>How it is built</h2>
+<p>Each concern lives in its own module under <code>ks.d/</code>, with optional ones under <code>optional/</code>. The build script assembles them in order, substitutes the machine's values and, with pykickstart installed, validates the result: one kickstart file for Fedora's network installer. The README in the repository is the documentation, from the build and the USB stick to Secure Boot enrollment and the trade-offs.</p>
+
+<p class="cta"><a href="https://github.com/argbed/argbed">Source and documentation on GitHub</a></p>
+
+<footer>
+<p>The name is pronounced ARG-bed: the Sasanian title of the commander who held a citadel.</p>
+<p>© 2026 <a href="https://amirghayour.com">Amir Ghayour</a>. Argbed is licensed under the Apache License, Version 2.0. "Fedora" is a trademark of Red Hat, Inc.; Argbed is not affiliated with or endorsed by the Fedora Project.</p>
+<p>This page is static: no scripts, no cookies, no third-party requests.</p>
+</footer>
+</main>
+</body>
+</html>
