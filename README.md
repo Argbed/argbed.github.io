@@ -2,3 +2,4 @@
 
 The landing page for [Argbed](https://github.com/argbed/argbed), served by GitHub Pages.
 Static HTML and CSS only: no scripts, no cookies, no third-party requests.
+`og.png` is the link-preview image, rendered from `og-source.html` at 1200 by 630.

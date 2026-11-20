@@ -7,8 +7,16 @@
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="light dark">
 <meta name="description" content="Argbed is a hardened, private, minimal, modular kickstart for Fedora: encrypted root, signed UKI boot, default-drop firewall, confined users, no @core.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://argbed.com/">
 <meta property="og:title" content="Argbed: a hardened, private, minimal, modular kickstart for Fedora">
 <meta property="og:description" content="Encrypted root, signed UKI boot, default-drop firewall, confined users, no @core. One script assembles the modules into one kickstart file for Fedora's network installer.">
+<meta property="og:image" content="https://argbed.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Argbed: a hardened, private, minimal, modular kickstart for Fedora">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="Argbed: a hardened, private, minimal, modular kickstart for Fedora">
 <title>Argbed: a hardened, private, minimal, modular kickstart for Fedora</title>
 <link rel="canonical" href="https://argbed.com/">
 <link rel="icon" href="argbed.svg" type="image/svg+xml">
@@ -23,24 +31,44 @@
 <p class="say">A hardened, private, minimal, modular kickstart for Fedora</p>
 </div>
 </header>
-<p class="lead">One script assembles the modules into one kickstart file for Fedora's network installer.</p>
+<p class="lead">A kickstart is the file that tells Fedora's installer what to do. Argbed assembles one from small modules, and what it installs is Fedora itself, from Fedora's own packages.</p>
 
-<h2>What the installed system is</h2>
+<h2>Not a distro</h2>
+<p>Every package in the base comes from Fedora's own repositories, installed by Fedora's installer and updated with dnf: no custom package manager, no repackaging, no repository of its own. After the install the system is Fedora, configured by the modules.</p>
+
+<h2>Hardened</h2>
 <ul>
 <li>LUKS2-encrypted root filesystem.</li>
-<li>Signed unified kernel images boot through shim under a key generated at install time; with Secure Boot on, nothing unsigned boots. GRUB has no boot entry and no configuration.</li>
-<li>Default-drop nftables for inbound and outbound traffic, loaded before the network comes up on every boot.</li>
+<li>Signed unified kernel images boot through shim and systemd-boot under a key generated at install time; with Secure Boot on, nothing unsigned boots. GRUB is not in the boot path: no boot entry, no configuration.</li>
 <li>SELinux enforcing, with confined users and a locked root account.</li>
-<li>systemd-networkd and iwd instead of NetworkManager, with randomized MAC addresses and anonymized DHCP.</li>
-<li>Microphones and cameras disabled: no capture node in the audio server, and their device nodes closed to every unprivileged process.</li>
-<li>Updates installed at boot, before login, never during a session.</li>
-<li>A sway Wayland desktop.</li>
-<li>No <code>@core</code>: every package is named in a module, a hard dependency of one, or one of the installer's own additions.</li>
+<li>Default-drop nftables for inbound and outbound traffic, loaded before the network comes up on every boot.</li>
+<li>Updates installed at boot, before login, or by hand with dnf at any time.</li>
 </ul>
 
-<h2>How it is built</h2>
-<p>Each concern lives in its own module under <code>ks.d/</code>, with optional ones under <code>optional/</code>. The build script assembles them in order, substitutes the machine's values and, with pykickstart installed, validates the result: one kickstart file for Fedora's network installer. The README in the repository is the documentation, from the build and the USB stick to Secure Boot enrollment and the trade-offs.</p>
+<h2>Private</h2>
+<ul>
+<li>systemd-networkd and iwd, not NetworkManager, with randomized MAC addresses and anonymized DHCP.</li>
+<li>DNS is a static file naming pinned resolvers, Cloudflare's by default; the firewall passes port 53 to no other address, and DHCP-provided DNS is ignored.</li>
+<li>Microphones and cameras disabled: no capture node in the audio server, and their device nodes closed to every unprivileged process.</li>
+<li>Bluetooth pairable only inside a bluetoothctl session and never discoverable unless switched on.</li>
+<li>Firefox hardened by policy: telemetry and sync off, third-party cookies rejected, HTTPS only, uBlock Origin, DuckDuckGo as the search engine.</li>
+</ul>
 
+<h2>Minimal</h2>
+<ul>
+<li>No <code>@core</code>: every package is named in a module, a hard dependency of one, or one of the installer's own additions. Weak dependencies are off.</li>
+<li>A sway Wayland desktop. No wallpaper and no graphical settings tool: the base's only graphical programs are sway with a bar and a lock screen, a terminal and Firefox.</li>
+</ul>
+
+<h2>Modular</h2>
+<ul>
+<li>Each concern lives in its own module under <code>ks.d/</code>, with optional ones under <code>optional/</code>: the packages and their configuration together.</li>
+<li>The build script assembles the active modules in order, substitutes the machine's values and, with pykickstart installed, validates the result: one kickstart file for Fedora's network installer.</li>
+<li>An optional module is enabled by copying it into <code>ks.d/</code> and disabled by taking it out. A base module such as Bluetooth comes out the same way; the README's base section names the packages the system cannot do without.</li>
+<li>Anything else installs with dnf from Fedora's repositories.</li>
+</ul>
+
+<p>The README in the repository is the documentation, from the build and the USB stick to Secure Boot enrollment and the trade-offs.</p>
 <p class="cta"><a href="https://github.com/argbed/argbed">Source and documentation on GitHub</a></p>
 
 <footer>
